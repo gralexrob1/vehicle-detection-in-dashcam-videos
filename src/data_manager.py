@@ -6,6 +6,8 @@ import numpy as np
 from skimage import io, transform
 
 
+# FROM BASELINE NOTEBOOK
+
 def read_frame(path, df_annotation, frame):
     """Read frames and create integer frame_id-s"""
     file_path = df_annotation[df_annotation.index == frame]['frame_id'].values[0]
@@ -38,6 +40,21 @@ def show_annotation(path, df_annotation, frame):
     ax.imshow(img)
     ax.set_title('Annotations for frame {}.'.format(frame))
 
+
+def bounding_boxes_to_mask(bounding_boxes, H, W):
+    
+    """
+    Converts set of bounding boxes to a binary mask
+    """
+
+    mask = np.zeros((H, W))
+    for x, y, dx, dy in bounding_boxes:
+        mask[y:y+dy, x:x+dx] = 1
+
+    return mask
+
+
+# FURTHER FUNCTIONS
 
 def extract_annotations(path, df_annotation, frame):
     img = read_frame(path, df_annotation, frame)
