@@ -102,3 +102,26 @@ def feature_pipeline(
     features = np.array(features)
 
     return features
+
+
+def feature_from_images_pipeline(
+    images, 
+    spatial_size,
+    color_bins_n, color_bins_range,
+    orientations, pixels_per_cell, cells_per_block, transform_sqrt,
+    channel_axis=None
+):
+
+    features = []
+    
+    for image in tqdm(images):
+        image_features = feature_extraction(
+            image,
+            spatial_size=spatial_size,
+            color_bins_n=color_bins_n, color_bins_range=color_bins_range,
+            orientations=orientations, pixels_per_cell=pixels_per_cell, cells_per_block=cells_per_block,
+            transform_sqrt=transform_sqrt, channel_axis=channel_axis
+        )
+        features.append(image_features)
+
+    return np.array(features)

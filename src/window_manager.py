@@ -2,64 +2,6 @@ import cv2
 import numpy as np
 
 
-# def slide_window_helper(
-#     img, 
-#     x_start_stop=[None, None], y_start_stop=[None, None], 
-#     window_size=[96, 64]
-# ):
-    
-#     window_size_x = window_size[0]
-#     window_size_y = window_size[1]
-#     xy_overlap=(0.5, 0.5)
-
-#     # If x and/or y start/stop positions not defined, set to image size
-#     if x_start_stop[0] == None:
-#         x_start_stop[0] = 0
-#     if x_start_stop[1] == None:
-#         x_start_stop[1] = img.shape[1]
-#     if y_start_stop[0] == None:
-#         y_start_stop[0] = 0
-#     if y_start_stop[1] == None:
-#         y_start_stop[1] = img.shape[0]
-
-#     # Compute the span of the region to be searched    
-#     xspan = x_start_stop[1] - x_start_stop[0]
-#     yspan = y_start_stop[1] - y_start_stop[0]
-
-#     # Compute the number of pixels per step in x/y
-#     nx_pix_per_step = np.int32(window_size_x*(1 - xy_overlap[0]))
-#     ny_pix_per_step = np.int32(window_size_y*(1 - xy_overlap[1]))
-
-#     # Compute the number of windows in x/y
-#     nx_windows = np.int32(xspan/nx_pix_per_step) - 2
-#     ny_windows = np.int32(yspan/ny_pix_per_step) - 2
-
-#     # Initialize a list to append window positions to
-#     window_list = []
-    
-#     ys = y_start_stop[0]
-#     while ys + window_size_y < y_start_stop[1]: 
-
-#         xs = x_start_stop[0]
-#         while xs < x_start_stop[1]:
-#             # Calculate window position
-#             endx = xs + window_size_x
-#             endy = ys + window_size_y
-
-#             # Append window position to list
-#             window_list.append(((xs, ys), (endx, endy)))
-
-#             xs += nx_pix_per_step
-
-#         window_size_x = int(window_size_x * 1.3)
-#         window_size_y = int(window_size_y * 1.3)
-#         nx_pix_per_step = np.int32(window_size_x*(1 - xy_overlap[0]))
-#         ny_pix_per_step = np.int32(window_size_y*(1 - xy_overlap[1]))
-#         ys += ny_pix_per_step
-
-#     return window_list
-
-
 def slide_window_helper(img, x_start_stop=[None, None], y_start_stop=[None, None], window_size=[96, 64], overlapping=0.5):
     """
     Generate sliding windows over an image.
@@ -97,12 +39,6 @@ def slide_window_helper(img, x_start_stop=[None, None], y_start_stop=[None, None
 
     return windows
 
-
-# def slide_window(img, x_start_stop=[None, None], y_start_stop=[None, None]):
-#     windows_a = slide_window_helper(img, x_start_stop, y_start_stop, window_size=[128, 128])
-#     windows_b = slide_window_helper(img, x_start_stop, y_start_stop, window_size=[64, 64])
-#     windows_c = slide_window_helper(img, x_start_stop, y_start_stop, window_size=[32, 32])
-#     return windows_a + windows_b + windows_c
 
 def slide_window(img, window_sizes, overlapping, x_start_stop=[None, None], y_start_stop=[None, None]):
     all_windows = []
